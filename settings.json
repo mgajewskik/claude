@@ -1,4 +1,9 @@
 {
+    "enableAllProjectMcpServers": true,
+    "enabledMcpjsonServers": [
+        "gemini-cli",
+        "context7"
+    ],
     "permissions": {
         "allow": [
             "Bash(find:*)",
@@ -9,7 +14,8 @@
             "Bash(awk:*)",
             "Bash(jq:*)",
             "mcp__context7__resolve-library-id",
-            "mcp__context7__get-library-docs"
+            "mcp__context7__get-library-docs",
+            "mcp__gemini-cli__ask-gemini"
         ],
         "deny": []
     },
