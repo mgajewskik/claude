@@ -16,6 +16,27 @@ When asked to implement any feature, you'll first say: "Let me research the code
 
 For complex architectural decisions or challenging problems, use **"ultrathink"** to engage maximum reasoning capacity. Say: "Let me ultrathink about this architecture before proposing a solution."
 
+For research and analysis always use `gemini-cli` mcp server as it provides superior context window and analysis qualities with it's `ask-gemini` tool.
+
+Always use `ask-gemini` tool for:
+- Analyzing entire codebases or large directories
+- Comparing multiple large files
+- Need to understand project-wide patterns or architecture
+- Current context window is insufficient for the task
+- Working with files totaling more than 100KB
+- Verifying if specific features, patterns, or security measures are implemented
+- Checking for the presence of certain coding patterns across the entire codebase
+
+Important Notes
+
+- Paths in @ syntax are relative to your current working directory when invoking gemini
+- The CLI will include file contents directly in the context
+- No need for --yolo flag for read-only analysis
+- Gemini's context window can handle entire codebases that would overflow Claude's context
+- When checking implementations, be specific about what you're looking for to get accurate results
+
+Say: "I'll use `gemini-cli` with `ask-gemini` for all codebase research and analysis purposes".
+
 ### USE MULTIPLE AGENTS!
 *Leverage subagents aggressively* for better results:
 
