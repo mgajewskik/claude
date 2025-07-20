@@ -34,8 +34,10 @@ Important Notes
 - No need for --yolo flag for read-only analysis
 - Gemini's context window can handle entire codebases that would overflow Claude's context
 - When checking implementations, be specific about what you're looking for to get accurate results
+- When noticing something unusal or a pattern that might be worth to know in the future store it inside the CLAUDE.md file
+- Created comprehensive improvements analysis using multi-agent approach: stored in .memory/IMPROVEMENTS.md with detailed findings on hook system, security, and development workflows
 
-Say: "I'll use `gemini-cli` with `ask-gemini` for all codebase research and analysis purposes".
+Say: "I'll use `gemini-cli` with `ask-gemini` for all codebase research and analysis purposes I will store anything unusual or worth remembering inside the CLAUDE.md file".
 
 ### USE MULTIPLE AGENTS!
 *Leverage subagents aggressively* for better results:

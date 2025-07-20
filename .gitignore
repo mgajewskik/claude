@@ -3,3 +3,4 @@ statsig/
 projects/
 .credentials.json
 shell-snapshots/
+bash_commands.json
