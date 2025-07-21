@@ -23,8 +23,19 @@ def main():
             "description": tool_input.get("description"),
         }
 
-        # Path to the bash_commands.json file in .claude directory
-        log_file = Path(__file__).parent.parent / "bash_commands.json"
+        # Path to the bash_commands.json file in project's .claude directory
+        try:
+            # Get current working directory from hook input
+            cwd = input_data.get("cwd", ".")
+            project_claude_dir = Path(cwd) / ".claude"
+            
+            # Create project .claude directory if it doesn't exist
+            project_claude_dir.mkdir(exist_ok=True)
+            
+            log_file = project_claude_dir / "bash_commands.json"
+        except (OSError, PermissionError):
+            # Fallback to global log if project-specific fails
+            log_file = Path(__file__).parent.parent / "bash_commands.json"
 
         # Load existing data or create empty list
         if log_file.exists():
