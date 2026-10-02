@@ -585,5 +585,6 @@
   },
   "tui": "fullscreen",
   "autoMemoryEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark"
 }
