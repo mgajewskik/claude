@@ -59,6 +59,10 @@ Default: treat targets as **production / customer-facing / unknown** unless clea
 - File tools for read/list/search/edit; shell for execution, git, package scripts, and process diagnostics.
 - Commit with `git commit -F <file>`: write the message to a temp file with the Write tool first. Never pass it via heredoc or stdin; that hangs in the Bash sandbox.
 
+## Subagents
+
+- Spawn the built-in `Explore` agent with `model: "sonnet"` so searches run on Sonnet with Explore's own prompt.
+
 ## PASS-gate
 
 Before saying a change is done, run one fresh-context review when behavior can break, a contract changes, or more than one file is involved.
