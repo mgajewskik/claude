@@ -5,10 +5,27 @@
 - `claude`: acceptEdits; sandboxed Bash runs without prompts except `ask.txt` rules (reads anywhere except `~/.ssh`, `~/.aws`, `~/.gnupg`; writes only in cwd + allowed roots). MCP tools other than context7 and web fetches still prompt. Because of the read block, git over SSH and AWS CLI auth don't work from Claude's Bash.
 - `claude --settings ~/.claude/profiles/strict.json`: same, plus no reads outside cwd (shell and file tools).
 
-Shell alias (add to `~/.zshrc`):
+Shell alias and launch guard (add to `~/.zshrc`):
 
 ```sh
 alias claude-strict='claude --settings ~/.claude/profiles/strict.json'
+
+# While any sandboxed Bash command runs, the sandbox leaves an empty
+# ~/.claude/.config.json mount point. Claude Code reads that path as its legacy
+# global config instead of ~/.claude.json: it either refuses to start ("JSON
+# Parse error: Unexpected EOF") or saves a fresh config there, which then
+# shadows ~/.claude.json. Remove it (or move it aside if non-empty) at launch.
+claude() {
+    local legacy="$HOME/.claude/.config.json"
+    if [[ -f $legacy && ! -L $legacy && -f $HOME/.claude.json ]]; then
+        if [[ -s $legacy ]]; then
+            mv -- "$legacy" "$legacy.stray.$(date +%s)"
+        else
+            rm -f -- "$legacy"
+        fi
+    fi
+    command claude "$@"
+}
 ```
 
 ## Bash deny/ask rules

@@ -2,6 +2,7 @@
 .credentials.json
 remote-settings*.json
 policy-limits*.json
+.config.json*
 
 # runtime / sessions / caches
 .claude/
