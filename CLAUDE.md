@@ -58,6 +58,7 @@ Default: treat targets as **production / customer-facing / unknown** unless clea
 - Write shell commands without an `rtk` prefix; the RTK hook rewrites them. If RTK breaks a valid command: `rtk proxy <command> ...`.
 - File tools for read/list/search/edit; shell for execution, git, package scripts, and process diagnostics.
 - Commit with `git commit -F <file>`: write the message to a temp file with the Write tool first. Never pass it via heredoc or stdin; that hangs in the Bash sandbox.
+- Commit as the git identity configured in the repository (`git config user.name` / `user.email`); never pass `--author` or override it. Never add `Co-Authored-By` or any other AI attribution to commits or PRs.
 
 ## Subagents
 

@@ -3,6 +3,11 @@
   "env": {
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "true"
   },
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
   "permissions": {
     "allow": [
       "mcp__context7"
