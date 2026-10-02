@@ -485,7 +485,7 @@
       "~/.agents/skills"
     ]
   },
-  "model": "opus",
+  "model": "opus[1m]",
   "skillOverrides": {
     "plantuml-diagrams": "off"
   },
@@ -522,6 +522,11 @@
         ]
       }
     ]
+  },
+  "bashEditDiffEnabled": false,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
   },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
@@ -579,11 +584,6 @@
     }
   },
   "tui": "fullscreen",
-  "bashEditDiffEnabled": false,
   "autoMemoryEnabled": true,
-  "skipDangerousModePermissionPrompt": true,
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/statusline.sh"
-  }
+  "skipDangerousModePermissionPrompt": true
 }
