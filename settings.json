@@ -4,7 +4,13 @@
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "true"
   },
   "permissions": {
+    "allow": [
+      "mcp__context7"
+    ],
     "deny": [
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.gnupg/**)",
       "Bash(sudo *)",
       "Bash(doas *)",
       "Bash(pkexec *)",
@@ -469,7 +475,7 @@
       "Bash(rtk mise use -g*)",
       "Bash(rtk * mise use -g*)"
     ],
-    "defaultMode": "bypassPermissions",
+    "defaultMode": "acceptEdits",
     "additionalDirectories": [
       "~/.agents/skills"
     ]

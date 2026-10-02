@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Writes deny.txt / ask.txt into settings.json permissions.deny / permissions.ask.
+# Non-Bash deny rules (e.g. Read(~/.ssh/**)) are kept from settings.json.
 set -euo pipefail
 
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -17,5 +18,6 @@ deny="$(jq -R -s "$rules" "$dir/deny.txt")"
 ask="$(jq -R -s "$rules" "$dir/ask.txt")"
 
 jq --argjson deny "$deny" --argjson ask "$ask" \
-    '.permissions.deny = $deny | .permissions.ask = $ask' "$settings" >"$settings.tmp"
+    '.permissions.deny = ([.permissions.deny[]? | select(startswith("Bash(") | not)] + $deny)
+     | .permissions.ask = $ask' "$settings" >"$settings.tmp"
 mv "$settings.tmp" "$settings"

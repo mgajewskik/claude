@@ -2,7 +2,7 @@
 
 ## Launch modes
 
-- `claude`: bypassPermissions; Bash sandboxed (reads anywhere, writes only in cwd + allowed roots).
+- `claude`: acceptEdits; sandboxed Bash runs without prompts except `ask.txt` rules (reads anywhere except `~/.ssh`, `~/.aws`, `~/.gnupg`; writes only in cwd + allowed roots). MCP tools other than context7 and web fetches still prompt. Because of the read block, git over SSH and AWS CLI auth don't work from Claude's Bash.
 - `claude --settings ~/.claude/profiles/strict.json`: same, plus no reads outside cwd (shell and file tools).
 
 Shell alias (add to `~/.zshrc`):
@@ -13,7 +13,7 @@ alias claude-strict='claude --settings ~/.claude/profiles/strict.json'
 
 ## Bash deny/ask rules
 
-Edit `permissions/deny.txt` or `permissions/ask.txt`, then run `bash ~/.claude/permissions/generate.sh` to write them into `settings.json` (adds `rtk <cmd>` / `rtk * <cmd>` variants).
+Edit `permissions/deny.txt` or `permissions/ask.txt`, then run `bash ~/.claude/permissions/generate.sh` to write them into `settings.json` (adds `rtk <cmd>` / `rtk * <cmd>` variants). Non-Bash deny rules such as `Read(~/.ssh/**)` live directly in `settings.json` and survive regeneration; a `Read` deny also blocks sandboxed Bash from reading the path.
 
 ## One-time setup (run in a normal terminal; ~/.claude.json and plugins/ are outside the sandbox)
 
