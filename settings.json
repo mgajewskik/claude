@@ -3,150 +3,7 @@
   "env": {
     "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "true"
   },
-  "model": "opus",
-  "skillOverrides": {
-    "plantuml-diagrams": "off"
-  },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Edit|Write|NotebookEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$HOME/.claude/hooks/block-writes-outside-cwd.sh\""
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "rtk hook claude"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "matcher": "^(startup|resume|clear|compact|fork)$",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash '/home/mgajewskik/.claude/hooks/herdr-agent-state.sh' session",
-            "timeout": 10
-          }
-        ]
-      }
-    ]
-  },
-  "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true,
-    "terraform-lsp@personal": true
-  },
-  "extraKnownMarketplaces": {
-    "claude-plugins-official": {
-      "source": {
-        "source": "github",
-        "repo": "anthropics/claude-plugins-official"
-      }
-    },
-    "personal": {
-      "source": {
-        "source": "directory",
-        "path": "/home/mgajewskik/.claude/local-plugins"
-      }
-    }
-  },
-  "sandbox": {
-    "enabled": true,
-    "failIfUnavailable": true,
-    "allowUnsandboxedCommands": false,
-    "filesystem": {
-      "allowWrite": [
-        "/tmp",
-        "/var/tmp",
-        "~/.cache",
-        "~/.local/share/mise",
-        "~/.local/state/mise",
-        "~/.local/share/uv",
-        "~/.local/share/rtk",
-        "~/go/pkg",
-        "~/.ansible",
-        "/run/user/1000/terminal-browser-059b082c",
-        "~/.local/share/terminal-browser-059b082c",
-        "~/.local/state/terminal-browser-059b082c",
-        "~/.config/terminal-browser-059b082c",
-        "~/.local/state/terminal-browser-interop"
-      ]
-    }
-  },
-  "modelSettings": {
-    "claude-opus-5-5": {
-      "effortLevel": "high"
-    }
-  },
-  "pluginConfigs": {
-    "agents-md@builtin": {
-      "options": {
-        "instructionFiles": "claude-md-and-agents-md"
-      }
-    }
-  },
-  "tui": "fullscreen",
-  "autoMemoryEnabled": true,
-  "skipDangerousModePermissionPrompt": true,
   "permissions": {
-    "ask": [
-      "Bash(git push)",
-      "Bash(git push *)",
-      "Bash(gh pr merge*)",
-      "Bash(pacman -S*)",
-      "Bash(yay -S*)",
-      "Bash(paru -S*)",
-      "Bash(npm install -g*)",
-      "Bash(npm i -g*)",
-      "Bash(pip install*)",
-      "Bash(pip3 install*)",
-      "Bash(uv tool install*)",
-      "Bash(cargo install*)",
-      "Bash(go install*)",
-      "Bash(mise install*)",
-      "Bash(mise use -g*)",
-      "Bash(rtk git push)",
-      "Bash(rtk * git push)",
-      "Bash(rtk git push *)",
-      "Bash(rtk * git push *)",
-      "Bash(rtk gh pr merge*)",
-      "Bash(rtk * gh pr merge*)",
-      "Bash(rtk pacman -S*)",
-      "Bash(rtk * pacman -S*)",
-      "Bash(rtk yay -S*)",
-      "Bash(rtk * yay -S*)",
-      "Bash(rtk paru -S*)",
-      "Bash(rtk * paru -S*)",
-      "Bash(rtk npm install -g*)",
-      "Bash(rtk * npm install -g*)",
-      "Bash(rtk npm i -g*)",
-      "Bash(rtk * npm i -g*)",
-      "Bash(rtk pip install*)",
-      "Bash(rtk * pip install*)",
-      "Bash(rtk pip3 install*)",
-      "Bash(rtk * pip3 install*)",
-      "Bash(rtk uv tool install*)",
-      "Bash(rtk * uv tool install*)",
-      "Bash(rtk cargo install*)",
-      "Bash(rtk * cargo install*)",
-      "Bash(rtk go install*)",
-      "Bash(rtk * go install*)",
-      "Bash(rtk mise install*)",
-      "Bash(rtk * mise install*)",
-      "Bash(rtk mise use -g*)",
-      "Bash(rtk * mise use -g*)"
-    ],
     "deny": [
       "Bash(sudo *)",
       "Bash(doas *)",
@@ -565,9 +422,152 @@
       "Bash(rtk podman volume rm*)",
       "Bash(rtk * podman volume rm*)"
     ],
+    "ask": [
+      "Bash(git push)",
+      "Bash(git push *)",
+      "Bash(gh pr merge*)",
+      "Bash(pacman -S*)",
+      "Bash(yay -S*)",
+      "Bash(paru -S*)",
+      "Bash(npm install -g*)",
+      "Bash(npm i -g*)",
+      "Bash(pip install*)",
+      "Bash(pip3 install*)",
+      "Bash(uv tool install*)",
+      "Bash(cargo install*)",
+      "Bash(go install*)",
+      "Bash(mise install*)",
+      "Bash(mise use -g*)",
+      "Bash(rtk git push)",
+      "Bash(rtk * git push)",
+      "Bash(rtk git push *)",
+      "Bash(rtk * git push *)",
+      "Bash(rtk gh pr merge*)",
+      "Bash(rtk * gh pr merge*)",
+      "Bash(rtk pacman -S*)",
+      "Bash(rtk * pacman -S*)",
+      "Bash(rtk yay -S*)",
+      "Bash(rtk * yay -S*)",
+      "Bash(rtk paru -S*)",
+      "Bash(rtk * paru -S*)",
+      "Bash(rtk npm install -g*)",
+      "Bash(rtk * npm install -g*)",
+      "Bash(rtk npm i -g*)",
+      "Bash(rtk * npm i -g*)",
+      "Bash(rtk pip install*)",
+      "Bash(rtk * pip install*)",
+      "Bash(rtk pip3 install*)",
+      "Bash(rtk * pip3 install*)",
+      "Bash(rtk uv tool install*)",
+      "Bash(rtk * uv tool install*)",
+      "Bash(rtk cargo install*)",
+      "Bash(rtk * cargo install*)",
+      "Bash(rtk go install*)",
+      "Bash(rtk * go install*)",
+      "Bash(rtk mise install*)",
+      "Bash(rtk * mise install*)",
+      "Bash(rtk mise use -g*)",
+      "Bash(rtk * mise use -g*)"
+    ],
     "defaultMode": "bypassPermissions",
     "additionalDirectories": [
       "~/.agents/skills"
     ]
-  }
+  },
+  "model": "opus",
+  "skillOverrides": {
+    "plantuml-diagrams": "off"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/block-writes-outside-cwd.sh\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "^(startup|resume|clear|compact|fork)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/home/mgajewskik/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "terraform-lsp@personal": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "personal": {
+      "source": {
+        "source": "directory",
+        "path": "/home/mgajewskik/.claude/local-plugins"
+      }
+    }
+  },
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "allowUnsandboxedCommands": false,
+    "filesystem": {
+      "allowWrite": [
+        "/tmp",
+        "/var/tmp",
+        "~/.cache",
+        "~/.local/share/mise",
+        "~/.local/state/mise",
+        "~/.local/share/uv",
+        "~/.local/share/rtk",
+        "~/go/pkg",
+        "~/.ansible",
+        "/run/user/1000/terminal-browser-059b082c",
+        "~/.local/share/terminal-browser-059b082c",
+        "~/.local/state/terminal-browser-059b082c",
+        "~/.config/terminal-browser-059b082c",
+        "~/.local/state/terminal-browser-interop"
+      ]
+    }
+  },
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
+  "pluginConfigs": {
+    "agents-md@builtin": {
+      "options": {
+        "instructionFiles": "claude-md-and-agents-md"
+      }
+    }
+  },
+  "tui": "fullscreen",
+  "autoMemoryEnabled": true,
+  "skipDangerousModePermissionPrompt": true
 }
