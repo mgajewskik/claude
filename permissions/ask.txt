@@ -1,0 +1,21 @@
+# Bash ask patterns: prompt before running (approve or decline).
+# Run generate.sh after editing.
+
+# leaves the machine
+git push
+git push *
+gh pr merge*
+
+# installs
+pacman -S*
+yay -S*
+paru -S*
+npm install -g*
+npm i -g*
+pip install*
+pip3 install*
+uv tool install*
+cargo install*
+go install*
+mise install*
+mise use -g*

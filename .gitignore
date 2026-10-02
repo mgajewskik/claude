@@ -1,6 +1,34 @@
-todos/
-statsig/
-projects/
+# secrets / identity
 .credentials.json
+remote-settings*.json
+policy-limits*.json
+
+# runtime / sessions / caches
+.claude/
+projects/
+sessions/
+session-env/
 shell-snapshots/
+file-history/
+history.jsonl
+backups/
+skills.bak/
+cache/
+debug/
+logs/
+ide/
+todos/
+plans/
+shares/
+statsig/
+tasks/
+plugins/
+paste-cache/
+image-cache/
+telemetry/
+stats-cache.json
+settings.local.json
+.last-cleanup
+.last-update-result.json
 bash_commands.json
+*.lock
