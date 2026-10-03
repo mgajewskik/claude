@@ -27,6 +27,9 @@ plugins/
 paste-cache/
 image-cache/
 telemetry/
+chrome/
+feedback/
+usage-data/
 stats-cache.json
 settings.local.json
 .last-cleanup
