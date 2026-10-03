@@ -5,7 +5,9 @@
     {
       "context": "Chat",
       "bindings": {
-        "ctrl+e": "chat:externalEditor"
+        "ctrl+e": "chat:externalEditor",
+        "space": null,
+        "ctrl+space": "voice:pushToTalk"
       }
     },
     {
