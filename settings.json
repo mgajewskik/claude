@@ -582,6 +582,7 @@
       "effortLevel": "high"
     }
   },
+  "autoCompactWindow": 400000,
   "pluginConfigs": {
     "agents-md@builtin": {
       "options": {
