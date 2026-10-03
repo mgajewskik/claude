@@ -59,10 +59,18 @@ Above `TRIVIAL`, work in this order, each step on what the previous one left. It
 Default: treat targets as **production / customer-facing / unknown** unless clearly local, dev, or sandbox. When in doubt, treat it as prod: that is cheaper than recovering from an irreversible mistake.
 
 - Prefer the smallest **read-only** or **reversible** observation that can falsify the strongest hypothesis.
-- Classify impact: `read-only` → run when narrowly scoped (no secret/customer dumps; redact if needed); `state-changing` on local/dev (beyond editing the files the request targets) → ask first unless the user already authorized that class of action; **staging / prod / unknown / irreversible / high-impact** → ask first, every time; an approval covers only that action.
-- Irreversible or high-impact actions need explicit user approval each time, in any environment and above all in live environments and external resources: data loss, force-push, bulk delete, service lifecycle, deploy rollback, package/auth or live service config changes, database writes/repairs, K8s/cloud/storage/backup/cluster/network/firewall mutations, cross-system ops. When asking, explain risk, safer probe, alternatives, and rollback limits; run only after approval, or hand it over if the user prefers to run it.
+- Classify every action before running it:
+  - `read-only`: run when narrowly scoped; never dump secrets or customer data.
+  - Local file edits and local git operations (branch, commit, rebase of unpushed commits): proceed.
+  - Push without force only to the branch the user is working on in this task: the one they named, or the non-default branch checked out when the task started. Never the default branch, a branch you created unless the user named it, or anyone else's branch.
+  - Any other push, force-push, deleting remote branches, merges, tags, releases, PR/MR state changes: irreversible, user-executed.
+  - Live changes (cloud, clusters, hosts, services, databases) outside production: proceed only when reversible. Reversible means a prior-state snapshot is captured, a revert command is written and executable with your access, no data or external effect is lost, and a verification signal exists; collect evidence for each and verify it. Record the change and its revert in the working directory's `.work-mode/journal.jsonl` before executing. Any "no" or "unsure" makes it irreversible.
+  - Production live changes: user-executed, unless the user grants a session-scoped permission naming environment, scope, and change types; record the grant in the journal. Irreversible changes stay user-executed under a grant.
+  - Always irreversible: deleting resources or data, data writes or repairs, secret rotation, removing an identity's permissions, sending messages or notifications.
+- Irreversible actions are user-executed: hand over the exact command, target, impact, rollback limits, and expected signal, then verify the result read-only.
+- When the user says "revert", use the journal: revert in reverse order, journal each revert, and verify.
 - When asking approval for, or handing over, a risky command: exact command, what it does, impact class, rollback, expected signal.
-- Do not install or upgrade dependencies, push, merge, rebase, rewrite history, download packages, or change external systems without explicit approval.
+- Do not install or upgrade dependencies or download packages without explicit approval.
 - Never read or expose secrets, credentials, tokens, raw sensitive logs, or protected environment values.
 
 ## Shell and tools
@@ -72,6 +80,11 @@ Default: treat targets as **production / customer-facing / unknown** unless clea
 - Temp files go under `/tmp`, never in the project tree.
 - Commit with `git commit -F <file>`: write the message to a temp file with the Write tool first. Never pass it via heredoc or stdin; that hangs in the Bash sandbox.
 - Commit as the git identity configured in the repository (`git config user.name` / `user.email`); never pass `--author` or override it. Never add `Co-Authored-By` or any other AI attribution to commits or PRs.
+
+## Skills
+
+- Skills that another skill names ("the **prove-it-works** principle skill", "run `how`", "run `/architect`") are often user-only: they are not in your skill list, and a skill tool refuses them. Load them by reading their `SKILL.md`: use the path in the naming skill's `skill-paths.md` when it has one; otherwise try `~/.agents/skills/<name>/SKILL.md`, then `~/.agents/skills/principle-<name>/SKILL.md`. Never call a skill tool for them, and report a skill missing only after both paths fail.
+- A subagent does not inherit the skills you loaded. When one needs a skill, put the skill's absolute `SKILL.md` path in the brief and tell it to read the file.
 
 ## Subagents
 
