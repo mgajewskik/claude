@@ -508,6 +508,10 @@
           {
             "type": "command",
             "command": "rtk hook claude"
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/block-cd-heredoc.sh\""
           }
         ]
       }
