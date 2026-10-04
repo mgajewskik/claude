@@ -5,7 +5,7 @@ hooks:
   UserPromptSubmit:
     - hooks:
         - type: command
-          command: "echo 'work-mode is on. For a new task, match a playbook, copy its steps into the todolist, and apply the trigger table in work-mode SKILL.md. Skip this on a casual turn or when the user opts out.'"
+          command: "echo 'work-mode is on. A SIMPLE local edit: just do it within the contract and run its check. Otherwise, for a new task, match a playbook, copy its steps into the todolist, and apply the trigger table in work-mode SKILL.md. Skip this on a casual turn or when the user opts out.'"
 ---
 
 # Work agent
