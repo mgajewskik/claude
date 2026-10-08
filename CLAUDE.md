@@ -89,7 +89,11 @@ Default: treat targets as **production / customer-facing / unknown** unless clea
 ## Subagents
 
 - Use subagents to keep bulk reading, searching, and command output out of the main context; take back the conclusion, not the dump.
-- Delegate work that needs little judgment (search, reading and summarizing docs or files, running tests or commands, edits the brief fully specifies) to the `sonnet` agent; for broad searches, spawn the built-in `Explore` agent with `model: "sonnet"`. Keep architecture, ambiguous debugging, security, and PASS-gate review on the main model.
+- Delegate to the cheapest tier that can do the work:
+  - `haiku` agent: read-only lookups, including codebase-wide searches (find files, symbols, or values; grep; read and summarize a few files or doc pages; run a non-mutating command and report its raw output).
+  - `sonnet` agent: edits the brief fully specifies, tracing call paths across files, synthesizing several sources, running tests or builds and summarizing failures.
+  - Main model: architecture, ambiguous debugging, security, and PASS-gate review.
+- Smaller models follow exact instructions better than open goals: give the target paths, the expected result, and the done condition. If a result is thin or wrong because the model lacked judgment, move one tier up instead of retrying the same one.
 
 ## PASS-gate
 
