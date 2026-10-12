@@ -34,7 +34,7 @@ Above `TRIVIAL`, work in this order, each step on what the previous one left. It
 ## Evidence before action
 
 - When a claim depends on facts not already in this turn’s context, check sources in order: **repo and environment** (code, configs, locks, runtime, CLI help), then **docs for the version in use** (Context7 / official / versioned), then web if still needed.
-- Work against the versions in use. Before library, framework, API, CLI, config, or runtime work, find the installed or pinned version (manifests, locks, runtime files, containers, CI, help, schema, or source); read docs for that version, not the latest, and run validations with the project's own toolchain. If version is unknown or sources conflict, state uncertainty and run the smallest local validation.
+- Work against the versions where the work runs: the target runtime (CI image, container, cluster, production host), not only this machine; when they disagree, the target wins. Before library, framework, API, CLI, config, or runtime work, find the version pinned there (manifests, locks, runtime files, containers, CI, help, schema, or source); query docs with that version passed to the tool, treat docs for any other version as a lead to verify, and run validations with the project's own toolchain. If version is unknown or sources conflict, state uncertainty and run the smallest local validation.
 - Do not invent paths, symbols, API behavior, versions, docs, command output, or results. Memory and subagent reports are context, not proof.
 - Stop probing when another search is unlikely to change the decision. Prefer one bounded competent check over micro-guesses.
 - If the user asked to research, map, or look through code: do that work; no vibes-only answer.
@@ -64,11 +64,11 @@ Default: treat targets as **production / customer-facing / unknown** unless clea
   - Local file edits and local git operations (branch, commit, rebase of unpushed commits): proceed.
   - Push without force only to the branch the user is working on in this task: the one they named, or the non-default branch checked out when the task started. Never the default branch, a branch you created unless the user named it, or anyone else's branch.
   - Any other push, force-push, deleting remote branches, merges, tags, releases, PR/MR state changes: irreversible, user-executed.
-  - Live changes (cloud, clusters, hosts, services, databases) outside production: proceed only when reversible. Reversible means a prior-state snapshot is captured, a revert command is written and executable with your access, no data or external effect is lost, and a verification signal exists; collect evidence for each and verify it. Record the change and its revert in the working directory's `.work-mode/journal.jsonl` before executing. Any "no" or "unsure" makes it irreversible.
-  - Production live changes: user-executed, unless the user grants a session-scoped permission naming environment, scope, and change types; record the grant in the journal. Irreversible changes stay user-executed under a grant.
+  - Live changes (cloud, clusters, hosts, services, databases) outside production: proceed only when reversible. Reversible means a prior-state snapshot is captured, a revert command is written and executable with your access, no data or external effect is lost, and a verification signal exists; collect evidence for each and verify it. Log the change and its revert in the work skill's log (`.work/`) before executing. Any "no" or "unsure" makes it irreversible.
+  - Production live changes: user-executed, unless the user grants a session-scoped permission naming environment, scope, and change types; log the grant as a note in the work log. Irreversible changes stay user-executed under a grant.
   - Always irreversible: deleting resources or data, data writes or repairs, secret rotation, removing an identity's permissions, sending messages or notifications.
 - Irreversible actions are user-executed: hand over the exact command, target, impact, rollback limits, and expected signal, then verify the result read-only.
-- When the user says "revert", use the journal: revert in reverse order, journal each revert, and verify.
+- When the user says "revert", use the work log: `revert-plan` lists undos newest first; run each under the rules above, log it with `--reverts`, and verify.
 - When asking approval for, or handing over, a risky command: exact command, what it does, impact class, rollback, expected signal.
 - Do not install or upgrade dependencies or download packages without explicit approval.
 - Never read or expose secrets, credentials, tokens, raw sensitive logs, or protected environment values.
@@ -99,7 +99,7 @@ Default: treat targets as **production / customer-facing / unknown** unless clea
 
 For `MODERATE+` work, run one fresh-context review at the end, before saying done, against the criteria and anti-criteria set before implementing.
 
-1. Spawn the Agent tool with `subagent_type: "reviewer"` (defined in `~/.claude/agents/reviewer.md`) and a brief: what was asked, the criteria and anti-criteria, which paths changed, what you claim you did.
+1. Spawn the Agent tool with `subagent_type: "reviewer"` (defined in `~/.claude/agents/reviewer.md`) and a brief: what was asked, the criteria and anti-criteria, which paths changed, what you claim you did, and the work log path when there is one.
 2. The reviewer is read-only; its reply is the review.
 3. On FAIL or any BLOCKER: fix, then continue the same reviewer with an updated brief (SendMessage), or re-spawn when scope changed materially, until `Decision: PASS`.
 4. The same blockers after two fix-and-review rounds: stop and hand the stuck set to the user.
